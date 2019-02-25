@@ -1,0 +1,26 @@
+{
+  "name": "steemon",
+  "version": "1.0.0",
+  "description": "steem monitoring heler",
+  "main": "index.js",
+  "dependencies": {
+    "dateformat": "^3.0.3",
+    "request": "^2.88.0",
+    "steem": "^0.7.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wonsama/steemon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wonsama/steemon/issues"
+  },
+  "homepage": "https://github.com/wonsama/steemon#readme"
+}
