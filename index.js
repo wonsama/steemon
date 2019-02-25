@@ -49,17 +49,15 @@ const WFILE = require('./libs/WFILE');
   memo: 'upgrade:cocina' }
 */
 
-
 monitor.on(['transfer'], (data)=>{
 	let res = [];
     for(let d of data){
     	if(d.operation.to.indexOf('drugwars-dealer')>=0){
-    		// console.log( monitor.getDateStr(d.timestamp), d.operation);
     		res.push(d.operation);
     	}
     }
     if(data.length>0){
-    	WFILE.append('./out.txt', JSON.stringify(res));
+    	WFILE.append('./data.sm', JSON.stringify(res));
     	console.log( data[data.length-1].block_num, monitor.getDateStr(data[data.length-1].timestamp), res.length  );	
     }    
 }, 30631000);
