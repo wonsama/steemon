@@ -49,18 +49,40 @@ const WFILE = require('./libs/WFILE');
   memo: 'upgrade:cocina' }
 */
 
-monitor.on(['transfer'], (data)=>{
-	let res = [];
+let START_BLOCK = 30832827; //3.4 
+
+function start(){
+  monitor.on(['transfer'], (data)=>{
+    let res = [];
     for(let d of data){
-    	if(d.operation.to.indexOf('drugwars-dealer')>=0){
-    		res.push(d.operation);
-    	}
+      let to = d.operation.to;
+      let memo = d.operation.memo;//upgrade:cocina;
+      if(to.indexOf('drugwars-dealer')>=0 && memo.indexOf('upgrade:cocina')>=0){
+        res.push({block:d.block_num, from:d.operation.from, amount:d.operation.amount});
+      }
     }
-    if(data.length>0){
-    	WFILE.append('./data.sm', JSON.stringify(res));
-    	console.log( data[data.length-1].block_num, monitor.getDateStr(data[data.length-1].timestamp), res.length  );	
-    }    
-}, 30631000);
+    if(res.length>0){
+      WFILE.append('./cocina.sm', JSON.stringify(res));
+      console.log(res);
+      console.log( data[data.length-1].block_num, monitor.getDateStr(data[data.length-1].timestamp), res.length  ); 
+    }else{
+      console.log( data[data.length-1].block_num);
+    }
+    START_BLOCK = data[data.length-1].block_num;
+  }, START_BLOCK);  
+}
+
+function init(){
+  try{
+    start();
+  }catch(e){
+    setTimeout(function(){
+      init();  
+    }, 3000);
+  }
+}
+init();
+
 
 
 
